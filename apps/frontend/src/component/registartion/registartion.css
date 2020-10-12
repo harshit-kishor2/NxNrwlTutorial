@@ -1,0 +1,7 @@
+.box {
+  min-height: 500px;
+  max-width: 400px;
+  border: 2px solid lightslategray;
+  background-color: whitesmoke;
+  border-radius: 5%;
+}

@@ -1,0 +1,7 @@
+.link {
+  color: #FFF !important;
+}
+
+.link:hover {
+  color: darkred !important;
+}
