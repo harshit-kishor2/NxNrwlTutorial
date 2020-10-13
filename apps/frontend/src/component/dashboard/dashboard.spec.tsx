@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import HomePage from './home-page';
+import Dashboard from './dashboard';
 
-describe('HomePage', () => {
+describe('Dashboard', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<HomePage />);
+    const { baseElement } = render(<Dashboard />);
     expect(baseElement).toBeTruthy();
   });
 });

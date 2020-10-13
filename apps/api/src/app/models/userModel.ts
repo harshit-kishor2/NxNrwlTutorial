@@ -8,10 +8,11 @@ export interface userType extends Document{
 }
 
 const userSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true, dropDups: true },
-  password: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true, default: false },
+  name: { type: String },
+  googleId: { type: String },
+  email: { type: String,  unique: true, dropDups: true },
+  password: { type: String },
+    isAdmin: { type: Boolean, default: false },
   date:{type:Date,deafult:Date.now()}
 });
 

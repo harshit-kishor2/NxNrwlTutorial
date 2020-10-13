@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Menubar from './menubar';
+import Header from './header';
 
-describe('Menubar', () => {
+describe('Header', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Menubar />);
+    const { baseElement } = render(<Header />);
     expect(baseElement).toBeTruthy();
   });
 });

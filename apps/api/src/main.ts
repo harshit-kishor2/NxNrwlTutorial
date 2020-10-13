@@ -1,12 +1,12 @@
 import * as express from 'express';
 //import userRoute from './app/routes/userRoutes';
-import guestRoute from './app/routes/guestRoutes';
+import guestRoutes from './app/routes/guestRoutes';
+import authRoutes from './app/routes/authRoutes'
 import morgan from 'morgan';
 import * as bodyParser from 'body-parser';
 import {connect} from './app/utils/util';
 import passport from 'passport'
-import psprt from './app/utils/passport'
-import {environment} from './environments/environment'
+import { environment } from './environments/environment'
 const app: express.Application = express();
 
 //Database connect
@@ -15,15 +15,16 @@ connect(mongodbUrl)
 
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
-psprt(passport);
+app.use(passport.session());
+require('./app/utils/passport') 
 //Middleware..
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Load all Routes..
-app.use('/api', guestRoute);
+app.use('/api', guestRoutes);
+app.use('/auth', authRoutes);
 //app.use('/api/user', userRoute);
 
 // Page not found for other urls

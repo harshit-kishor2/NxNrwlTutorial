@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import './home-page.css';
+import React from 'react';
+
+import './dashboard.css';
+
 /* eslint-disable-next-line */
-export interface HomePageProps { }
+export interface DashboardProps { }
 
-export const HomePage = (props: HomePageProps) => {
-
-
+export const Dashboard = (props: DashboardProps) => {
   return (
     <div>
       <div className="row row-cols-1 row-cols-sm-4">
@@ -52,8 +52,7 @@ export const HomePage = (props: HomePageProps) => {
         </div>
       </div>
     </div>
-
   );
 };
 
-export default HomePage;
+export default Dashboard;

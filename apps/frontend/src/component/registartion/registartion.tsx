@@ -6,7 +6,10 @@ import './registartion.css';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
-export interface RegistartionProps { }
+export interface RegistartionProps {
+  history: any;
+  location: any;
+}
 
 export const Registartion = (props: RegistartionProps) => {
   const history = useHistory()
@@ -17,7 +20,7 @@ export const Registartion = (props: RegistartionProps) => {
     if (userInfo) {
       history.push('/');
     }
-  }, [userInfo])
+  }, []);
 
   const handleSubmit = (value, { resetForm }) => {
     const { name, email, password, rePassword } = value
@@ -25,7 +28,7 @@ export const Registartion = (props: RegistartionProps) => {
     resetForm();
   }
   return (
-    <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .5 }} exit={{ scale: 0, opacity: 0 }} className='box m-auto shadow-lg p-3 mb-5 bg-white rounded'>
+    <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .5 }} exit={{ scale: 0, opacity: 0 }} className='box'>
       <Formik
         initialValues={{ name: "", email: "", password: "", rePassword: "" }}
         onSubmit={handleSubmit}
@@ -43,7 +46,7 @@ export const Registartion = (props: RegistartionProps) => {
             <h3 className='mb-5'>
               Registration Form
             </h3>
-            {error && <div className='text-danger'>{error.status} Please fill all fields correctly</div>}
+            {error && <div className='text-danger'>{error.error} Please fill all fields correctly</div>}
             <div className="col mb-3">
               <Field
                 name="name"

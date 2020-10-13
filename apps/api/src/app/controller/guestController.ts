@@ -28,7 +28,7 @@ const {errors,isValid}=validateRegisterInput(req.body)
   User.findOne({email})
     .then(user => {
       if (user) {
-      return res.send({ status:400,email: "Email already exists" });
+      return res.status(400).json({error: "Email already exists" });
       }
       else {
         var newUser = new User({
@@ -43,7 +43,6 @@ const {errors,isValid}=validateRegisterInput(req.body)
           newUser.password = hash;
           newUser.save()
             .then(newUser => res.send({
-              status:200,
               _id: newUser.id,
               name: newUser.name,
               email: newUser.email,
@@ -72,7 +71,7 @@ const {errors,isValid}=validateRegisterInput(req.body)
    User.findOne({ email })
      .then(user => {
        if (!user) {
-         return res.send({status:400, email: "Email not found" });
+         return res.status(400).send({ email: "Email not found" });
        }
        else {
          bcrypt.compare(password, user.password)
@@ -88,7 +87,7 @@ const {errors,isValid}=validateRegisterInput(req.body)
               });
              }
              else {
-               return res.send({status:400, password: "Password incorrect" });
+               return res.status(400).send({password: "Password incorrect" });
              }
          })
        }
