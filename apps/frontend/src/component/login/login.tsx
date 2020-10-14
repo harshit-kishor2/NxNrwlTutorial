@@ -16,24 +16,18 @@ export const Login = (props: LoginProps) => {
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch()
-  useEffect(() => {
-    if (userInfo) {
-      history.push('/');
-    }
-  }, [userInfo])
+
   useEffect(() => {
     if (error) {
-      toast.error('hello')
+      toast.error("Please check your credentials..")
     }
   }, [error])
   const loginHandler = (value, { resetForm }) => {
     const { email, password } = value
-    dispatch(login(email, password))
+    dispatch(login(email, password, history))
   }
-
   return (
     <>
-
       <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .5 }} exit={{ scale: 0, opacity: 0 }} className='login-form' >
         <ToastContainer />
         <Formik
@@ -50,7 +44,6 @@ export const Login = (props: LoginProps) => {
               <h2 className='mb-5'>
                 Login
             </h2>
-              {error && <div className='text-danger'>Please check credentials..</div>}
               <div className="mb-3 col">
                 <Field
                   name="email"
@@ -59,6 +52,7 @@ export const Login = (props: LoginProps) => {
                   placeholder="Email"
 
                 />
+                {error && <div className='text-danger'>{error.email}</div>}
                 <p className='text-danger'><ErrorMessage name="email" /></p>
               </div>
               <div className="mb-3 col">
@@ -68,6 +62,7 @@ export const Login = (props: LoginProps) => {
                   className="rounded shadow text-black text-center"
                   placeholder="password"
                 />
+                {error && <div className='text-danger'>{error.password}</div>}
                 <p className='text-danger'><ErrorMessage name="password" /></p>
               </div>
               <div className="">

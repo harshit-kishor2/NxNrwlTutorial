@@ -15,17 +15,19 @@ const register = (name, email, password,rePassword,history) =>async (dispatch) =
       payload: error.response&&error.response.data?error.response.data:error.response });
   }  
 }
-const login = (email, password) => async dispatch => {
+const login = (email, password,history) => async dispatch => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     //const {data} = await axios.post("/api/login", { email, password});
-    const { data } = await axios.post("/api/login", {email, password});
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+    const { data } = await axios.post("/api/login", { email, password });
+    console.log(data.path)
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
+    history.push(`${data.path}`);
    // localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {      
     dispatch({
       type: USER_SIGNIN_FAIL,
-      payload: error.response && error.response.data ? error.response.data : error.response});
+      payload:error.response&& error.response.data.msg?error.response.data.msg:error.response});
   }  
 }
 

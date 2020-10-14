@@ -29,22 +29,22 @@ const authRoutes = (app) => {
   });
 
   //for local login via username and password
-  /*app.post('/api/login',
+  app.post('/api/login',
     (req, res, next) => {
-      passport.authenticate('local', {
-        successRedirect: 'http://localhost:4200', failureRedirect: 'http://localhost:4200/login'
+      passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err) }
+        if (!user) {
+          return res.status(400).send({ path: "/login", msg: info })
+        }
+        req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.send({path:"/",msg:user});
+    });
       })
       (req,res,next)
-     });*/
-  app.post('/api/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+     });
 
-  app.get("/login", (req, res) => {
-    res.redirect("http://localhost:4200/login")
-  })
+
   //for current user data located in cookie
 app.get("/api/current_user",currentUserController);
 
