@@ -7,8 +7,13 @@ import Registartion from '../component/registartion/registartion';
 import ForgotPassword from '../component/forgot-password/forgot-password';
 import Header from '../component/header/header';
 import Dashboard from '../component/dashboard/dashboard';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { currentUser } from '../actions/userActions';
 export const App = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(currentUser())
+  }, [])
   return (
     <div className="container">
       <BrowserRouter>
@@ -19,7 +24,6 @@ export const App = () => {
         <Route path="/forgot-password" component={ForgotPassword}></Route>
         <Footer />
       </BrowserRouter>
-
     </div >
   );
 };

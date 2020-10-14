@@ -20,7 +20,7 @@ export const Login = (props: LoginProps) => {
     if (userInfo) {
       history.push('/');
     }
-  }, [])
+  }, [userInfo])
   useEffect(() => {
     if (error) {
       toast.error('hello')
@@ -35,7 +35,6 @@ export const Login = (props: LoginProps) => {
     <>
 
       <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .5 }} exit={{ scale: 0, opacity: 0 }} className='login-form' >
-
         <ToastContainer />
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -90,8 +89,8 @@ export const Login = (props: LoginProps) => {
             <Link to='/registration'>Create Account</Link>
             <div className="or-seperator"><i>or</i></div>
             <div className="text-center social-btn">
-              <Link to='#' className="btn btn-primary btn-block"><i className="fa fa-facebook"></i> Sign in with <b>Facebook</b></Link>
-              <Link to='#' className="btn btn-info btn-block"><i className="fa fa-twitter"></i> Sign in with <b>Twitter</b></Link>
+              <a href='/auth/facebook' className="btn btn-primary btn-block"><i className="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+              <a href='#' className="btn btn-info btn-block"><i className="fa fa-twitter"></i> Sign in with <b>Twitter</b></a>
               <a href='/auth/google' className="btn btn-danger btn-block"><i className="fa fa-google"></i> Sign in with <b>Google</b></a>
             </div>
 

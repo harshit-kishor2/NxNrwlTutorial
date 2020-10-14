@@ -13,10 +13,6 @@ export interface HeaderProps { }
 export const Header = (props: HeaderProps) => {
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.userSignin)
-
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
   return (
     <div className='mb-4'>
       <Navbar bg="info" variant="dark" expand="lg">
@@ -44,7 +40,7 @@ export const Header = (props: HeaderProps) => {
                     <Link className='link nav-link' to="#">User Profile</Link>
                     <Link className='link nav-link' to="#">Issue Book</Link>
                     <h6>Welcome {userInfo.name}</h6>
-                    <Link className='link nav-link' to='#' onClick={logoutHandler}>Logout</Link>
+                    <a className='link nav-link' href='/api/logout'>Logout</a>
                   </>}
           </Nav>
         </Navbar.Collapse>

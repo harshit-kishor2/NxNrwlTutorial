@@ -20,7 +20,7 @@ export const Registartion = (props: RegistartionProps) => {
     if (userInfo) {
       history.push('/');
     }
-  }, []);
+  }, [userInfo]);
 
   const handleSubmit = (value, { resetForm }) => {
     const { name, email, password, rePassword } = value

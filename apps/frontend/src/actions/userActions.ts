@@ -1,5 +1,5 @@
 
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT } from './../constants/userConstants';
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, CURRENT_USER } from './../constants/userConstants';
 import axios from 'axios'
 
 const register = (name, email, password,rePassword,history) =>async (dispatch) => {
@@ -12,27 +12,26 @@ const register = (name, email, password,rePassword,history) =>async (dispatch) =
   } catch (error) { 
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,});
+      payload: error.response&&error.response.data?error.response.data:error.response });
   }  
-}  
-
+}
 const login = (email, password) => async dispatch => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
-    const {data} = await axios.post("/api/login", { email, password});
+    //const {data} = await axios.post("/api/login", { email, password});
+    const { data } = await axios.post("/api/login", {email, password});
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem('userInfo', JSON.stringify(data));
-   // Cookie.set('userInfo', JSON.stringify(data));
+   // localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {      
     dispatch({
       type: USER_SIGNIN_FAIL,
-      payload: error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,});
+      payload: error.response && error.response.data ? error.response.data : error.response});
   }  
+}
+
+const currentUser = () => async dispatch => {
+ const {data} = await axios.get("/api/current_user");
+  dispatch({type:CURRENT_USER,payload:data})
 }
 
 const logout = () => (dispatch) => {
@@ -40,4 +39,4 @@ const logout = () => (dispatch) => {
   dispatch({ type: USER_SIGNOUT });
 };
 
-export {register,login,logout}
+export {register,login,logout,currentUser}

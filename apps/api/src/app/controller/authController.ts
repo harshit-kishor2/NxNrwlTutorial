@@ -1,15 +1,12 @@
 import bcrypt from 'bcryptjs'
+import passport from 'passport'
 import {Request,RequestHandler,Response} from 'express'
 //Load Validation
-import validateLoginInput from '../middleware/validation/loginValidation';
+//import validateLoginInput from '../middleware/validation/loginValidation';
 import  validateRegisterInput from '../middleware/validation/registerValidation';
 // Load Model
 import User from '../models/userModel'
 import { getToken } from '../utils/util';
-//HomeController
-const homeController:RequestHandler = (req:Request, res:Response) => {
-  res.send('Welcome to backend side');
-};
 
 //RegisterController for Post request
    /*1st Check validation 
@@ -28,7 +25,7 @@ const {errors,isValid}=validateRegisterInput(req.body)
   User.findOne({email})
     .then(user => {
       if (user) {
-      return res.status(400).json({error: "Email already exists" });
+      return res.status(400).json({email: "Email already exists" });
       }
       else {
         var newUser = new User({
@@ -62,6 +59,8 @@ const {errors,isValid}=validateRegisterInput(req.body)
    check if user exists
    check password match from database
 */
+/*
+//Login controller by username and password 
  const loginController:RequestHandler = (req:Request, res:Response) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
@@ -94,5 +93,15 @@ const {errors,isValid}=validateRegisterInput(req.body)
    })
 
 };
+*/
 
-export {loginController,registerController,homeController}
+
+const currentUserController = (req, res) => {
+  res.send(req.user);
+}
+
+const logoutController = (req, res) => {
+  req.logout();
+  res.redirect("/");
+}
+export {registerController,currentUserController,logoutController}
