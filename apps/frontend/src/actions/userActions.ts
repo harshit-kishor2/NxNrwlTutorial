@@ -1,5 +1,5 @@
 
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, CURRENT_USER } from './../constants/userConstants';
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, CURRENT_USER, CURRENT_USER_SUCCESS, CURRENT_USER_REQUEST, CURRENT_USER_FAIL } from './../constants/userConstants';
 import axios from 'axios'
 
 const register = (name, email, password,rePassword,history) =>async (dispatch) => {
@@ -18,9 +18,7 @@ const register = (name, email, password,rePassword,history) =>async (dispatch) =
 const login = (email, password,history) => async dispatch => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
-    //const {data} = await axios.post("/api/login", { email, password});
     const { data } = await axios.post("/api/login", { email, password });
-    console.log(data.path)
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
     history.push(`${data.path}`);
    // localStorage.setItem('userInfo', JSON.stringify(data));
@@ -31,14 +29,20 @@ const login = (email, password,history) => async dispatch => {
   }  
 }
 
-const currentUser = () => async dispatch => {
- const {data} = await axios.get("/api/current_user");
-  dispatch({type:CURRENT_USER,payload:data})
+const handleCurrentUser = () => async dispatch => {
+   dispatch({ type: CURRENT_USER_REQUEST });
+  try {
+   const {data} = await axios.get("/api/current_user");
+  dispatch({ type: CURRENT_USER_SUCCESS, payload: data })
+  } catch (error) {      
+    dispatch({
+      type: CURRENT_USER_FAIL,
+      payload:error.response&& error.response.data.msg?error.response.data.msg:error.response});
+  }  
 }
 
 const logout = () => (dispatch) => {
-  localStorage.removeItem('userInfo');
   dispatch({ type: USER_SIGNOUT });
 };
 
-export {register,login,logout,currentUser}
+export {register,login,logout,handleCurrentUser}

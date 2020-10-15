@@ -11,7 +11,7 @@ export interface RegistartionProps {
   location: any;
 }
 
-export const Registartion = (props: RegistartionProps) => {
+export const Registartion = (props) => {
   const history = useHistory()
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;

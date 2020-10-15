@@ -1,4 +1,4 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, CURRENT_USER } from './../constants/userConstants';
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, CURRENT_USER, CURRENT_USER_REQUEST, CURRENT_USER_SUCCESS, CURRENT_USER_FAIL } from './../constants/userConstants';
 
 function userRegisterReducer(state = {}, action) {
   switch (action.type) {
@@ -12,7 +12,6 @@ function userRegisterReducer(state = {}, action) {
   }
 }
 function userLoginReducer(state = {}, action) {
-    console.log("payloadd",action.payload)
   switch (action.type) {
     case USER_SIGNIN_REQUEST:
       return { loading: true };
@@ -20,12 +19,21 @@ function userLoginReducer(state = {}, action) {
       return { loading: false, userInfo: action.payload };
     case USER_SIGNIN_FAIL:
       return { loading: false, error: action.payload };
+    default: return state;
+  }
+}
+function currentUserReducer(state = {}, action) {
+  switch (action.type) {
+    case CURRENT_USER_REQUEST:
+      return { loading: true };
+    case CURRENT_USER_SUCCESS:
+      return { loading: false, userInfo: action.payload };
+    case CURRENT_USER_FAIL:
+      return { loading: false, error: action.payload };
     case USER_SIGNOUT:
       return {};
-    case CURRENT_USER:
-      return {userInfo:action.payload}
     default: return state;
   }
 }
 
-export {userRegisterReducer,userLoginReducer}
+export {userRegisterReducer,userLoginReducer,currentUserReducer}

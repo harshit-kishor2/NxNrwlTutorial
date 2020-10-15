@@ -1,29 +1,38 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Footer } from '@project-structure/ui-guest'
-import Login from '../component/login/login';
-import Registartion from '../component/registartion/registartion';
-import ForgotPassword from '../component/forgot-password/forgot-password';
 import Header from '../component/header/header';
-import Dashboard from '../component/dashboard/dashboard';
 import { useSelector, useDispatch } from 'react-redux'
-import { currentUser } from '../actions/userActions';
+import { handleCurrentUser } from '../actions/userActions';
+import Loading from './pages/Loading';
+import MainSection from './routes/MainSection';
+
 export const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser);
+  const { userInfo } = currentUser;
   useEffect(() => {
-    dispatch(currentUser())
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000);
+    dispatch(handleCurrentUser())
+    setIsLoading(true)
   }, [])
+  if (isLoading) return <Loading />
+  /*
+  Header-- Here Nav bar with different links
+  MainSection-- This is the main section here actual page shows based on there routes
+  Footer-- This is the footer of page
+  */
   return (
     <div className="container">
-      <BrowserRouter>
-        <Header />
-        <Route exact path="/" component={Dashboard}></Route>
-        <Route exact path="/login" component={Login}></Route>
-        <Route path="/registration" component={Registartion}></Route>
-        <Route path="/forgot-password" component={ForgotPassword}></Route>
+      <Router>
+        <Header user={userInfo} />
+        <MainSection userInfo={userInfo} />
         <Footer />
-      </BrowserRouter>
+      </Router>
     </div >
   );
 };

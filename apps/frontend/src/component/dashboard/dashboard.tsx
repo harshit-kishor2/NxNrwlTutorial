@@ -5,7 +5,7 @@ import './dashboard.css';
 /* eslint-disable-next-line */
 export interface DashboardProps { }
 
-export const Dashboard = (props: DashboardProps) => {
+export const Dashboard = (props) => {
   return (
     <div>
       <div className="row row-cols-1 row-cols-sm-4">
