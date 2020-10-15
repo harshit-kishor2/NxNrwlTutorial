@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { handleCurrentUser } from '../actions/userActions';
 import Loading from './pages/Loading';
 import MainSection from './routes/MainSection';
-
+import './app.css'
 export const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch()

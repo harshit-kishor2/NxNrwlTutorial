@@ -5,6 +5,8 @@ import Registartion from './../../component/registartion/registartion';
 import NotAuth from '../pages/Notauth';
 import NotFound from '../pages/NotFound';
 import React from 'react';
+import ManageUser from '../../AdminComponent/manage-user/manage-user';
+import ManageBook from '../../AdminComponent/manage-book/manage-book';
 export default [
   {
     path: "/",
@@ -35,6 +37,16 @@ export default [
     path: "/forgot-password",
     comp: <ForgotPassword />,
     protected: "guest",
+  },
+  {
+    path: "/manage-user",
+    comp: <ManageUser />,
+    protected: "admin",
+  },
+  {
+    path: "/manage-book",
+    comp: <ManageBook />,
+    protected: "admin",
   },
 
 ]

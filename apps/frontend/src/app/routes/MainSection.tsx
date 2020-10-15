@@ -9,29 +9,32 @@ import UserRoutes from './UserRoutes';
 
 const MainSection = ({ userInfo }) => {
     return (
-        <Switch>
-            {routes.map((route, index) => {
-                if (route.protected === 'guest') {
+        <div className="page-wrap">
+            <Switch>
+                {routes.map((route, index) => {
+                    if (route.protected === 'guest') {
+                        return (
+                            <GuestRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</GuestRoutes>
+                        )
+                    }
+                    if (route.protected === 'admin') {
+                        return (
+                            <AdminRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</AdminRoutes>
+                        )
+                    }
+                    if (route.protected === 'user') {
+                        return (
+                            <UserRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</UserRoutes>
+                        )
+                    }
                     return (
-                        <GuestRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</GuestRoutes>
+                        <ActualRoute key={index} path={route.path} exact={route.exact}>{route.comp}</ActualRoute>
                     )
-                }
-                if (route.protected === 'admin') {
-                    return (
-                        <AdminRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</AdminRoutes>
-                    )
-                }
-                if (route.protected === 'user') {
-                    return (
-                        <UserRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</UserRoutes>
-                    )
-                }
-                return (
-                    <ActualRoute key={index} path={route.path} exact={route.exact}>{route.comp}</ActualRoute>
-                )
-            })}
-            <Route path="*"> <NotFound /></Route>
-        </Switch>
+                })}
+                <Route path="*"> <NotFound /></Route>
+            </Switch>
+
+        </div>
     )
 }
 
