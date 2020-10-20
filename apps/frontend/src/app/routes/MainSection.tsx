@@ -1,40 +1,51 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import ManageBook from '../../AdminComponent/manage-book/manage-book';
+import ManageUser from '../../AdminComponent/manage-user/manage-user';
+import Dashboard from '../../component/dashboard/dashboard';
+import ForgotPassword from '../../component/forgot-password/forgot-password';
+import Login from '../../component/login/login';
+import Registartion from '../../component/registartion/registartion';
+import ResetPassword from '../../component/reset-password/reset-password';
 import NotFound from '../pages/NotFound';
-import ActualRoute from './ActualRoute';
-import AdminRoutes from './AdminRoutes';
-import GuestRoutes from './GuestRoutes';
-import routes from './index';
-import UserRoutes from './UserRoutes';
 
 const MainSection = ({ userInfo }) => {
+
     return (
         <div className="page-wrap">
-            <Switch>
-                {routes.map((route, index) => {
-                    if (route.protected === 'guest') {
-                        return (
-                            <GuestRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</GuestRoutes>
-                        )
-                    }
-                    if (route.protected === 'admin') {
-                        return (
-                            <AdminRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</AdminRoutes>
-                        )
-                    }
-                    if (route.protected === 'user') {
-                        return (
-                            <UserRoutes user={userInfo} key={index} path={route.path} exact={route.exact}>{route.comp}</UserRoutes>
-                        )
-                    }
-                    return (
-                        <ActualRoute key={index} path={route.path} exact={route.exact}>{route.comp}</ActualRoute>
-                    )
-                })}
-                <Route path="*"> <NotFound /></Route>
-            </Switch>
+            <>
+                {
+                    !userInfo ?
+                        <Switch>
+                            <Route path='/' exact component={Dashboard} />
+                            <Route path='/login' exact component={Login} />
+                            <Route path='/registration' exact component={Registartion} />
+                            <Route path='/forgot-password' exact component={ForgotPassword} />
+                            <Route path='/reset-password/:token' exact component={ResetPassword} />
+                            <Route path="*"> <NotFound /></Route>
+                        </Switch>
+                        :
+                        userInfo.isAdmin ?
+                            <Switch>
+                                <Route path='/' exact component={Dashboard} />
+                                <Route path='/admin/manage-user' exact component={ManageUser} />
+                                <Route path='/admin/manage-book' exact component={ManageBook} />
+                                <Route path="*"> <NotFound /></Route>
+                            </Switch>
+                            :
+                            <Switch>
+                                <Route path='/' exact component={Dashboard} />
+                                <Route path='/user-profile' exact component={ManageUser} />
+                                <Route path='/issue-book' exact component={ManageBook} />
+                                <Route path="*"> <NotFound /></Route>
+                            </Switch>
 
-        </div>
+
+                }
+
+            </>
+
+        </div >
     )
 }
 

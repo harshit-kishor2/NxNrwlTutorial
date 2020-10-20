@@ -10,35 +10,40 @@ import {environment} from '../../environments/environment'
 
 const passportConfig = (app) => {  
 
-  /* 
-    This middlewares is required to make passport work with sessions and cookie
-    sessions are optional,  an easy solution to keeping users
-    logged in until they log out.
-  */
+//=============================================================================================================
+
+
+  
+    //This middlewares is required to make passport work with sessions and cookie
+    //sessions are optional,  an easy solution to keeping users
+    //logged in until they log out.
+  
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,   // the duration in milliseconds that the cookie is valid
     keys: [environment.COOKIE_SECRET],
   })
-);
-/*
-   Only necessary when using sessions.
-   This tells Passport how or what data to save about a user in the session cookie.
-   It's recommended you only serialize something like a unique username or user ID.
-   I prefer user ID. 
-*/
+  );
+
+  
+
+   //Only necessary when using sessions.
+   //This tells Passport how or what data to save about a user in the session cookie.
+   //It's recommended you only serialize something like a unique username or user ID.
+   //I prefer user ID. 
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
   //here id taken from database id
 });
 
-/*
-    Only necessary when using sessions.
-    This tells Passport how to turn the user ID we serialize in the session cookie
-    back into the actual User record from our Mongo database.
-    Here, we simply find the user with the matching ID and return that.
-    This will cause the User record to be available on each authenticated request via the req.user property.
-*/
+
+  //  Only necessary when using sessions.
+  //  This tells Passport how to turn the user ID we serialize in the session cookie
+  //  back into the actual User record from our Mongo database.
+  //  Here, we simply find the user with the matching ID and return that.
+  //  This will cause the User record to be available on each authenticated request via the req.user property.
+
 passport.deserializeUser((id, done) => {
   User.findById(id)
     .then((user) => {
@@ -49,6 +54,9 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+
+
+ //=============================================================================================================
 
 //Google Strategy
 passport.use(
@@ -78,7 +86,9 @@ passport.use(
     }
     )   
 );
- 
+
+//=============================================================================================================
+  
 //Local strategy
   passport.use(new LocalStrategy(
     {
@@ -110,6 +120,9 @@ passport.use(
   }
 ));
 
+  
+//================================================================================================================
+  
 //facebook strategy
 
 passport.use(
@@ -140,12 +153,18 @@ passport.use(
     )   
 );
  
+//=====================================================================================================================
+  
   // initialize passport. this is required, after you set up passport but BEFORE you use passport.session (if using)
   app.use(passport.initialize());
-  // only required if using sessions. this will add middleware from passport
-  // that will serialize/deserialize the user from the session cookie and add
-  // them to req.user
+  /* 
+  only required if using sessions. this will add middleware from passport
+  that will serialize/deserialize the user from the session cookie and add
+  them to req.user 
+  */
   app.use(passport.session());
+  
+//====================================================================================================================
 
 }
 

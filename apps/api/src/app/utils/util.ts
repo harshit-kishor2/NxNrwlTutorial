@@ -1,7 +1,9 @@
 import  jwt from 'jsonwebtoken';
 import mongoose from "mongoose";
 import {environment} from '../../environments/environment'
- const connect = (db: string) => {
+
+//========================================================================================================
+export const connect = (db: string) => {
     mongoose
       .connect(db, {
         useNewUrlParser: true,
@@ -15,7 +17,9 @@ import {environment} from '../../environments/environment'
         return process.exit(1);
       });
 };
-const getToken = (user) => {
+
+//========================================================================================================
+export const getToken = (user) => {
   return jwt.sign({
     _id: user._id,
     name: user.name,
@@ -27,7 +31,22 @@ const getToken = (user) => {
   })
 }
 
-const isAuth = (req, res, next) => {
+
+//========================================================================================================
+export const passwordToken = (user) => {
+  return jwt.sign({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  }, environment.JWT_SECRET, {
+    expiresIn: '10m'
+  })
+}
+
+
+//========================================================================================================
+export const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
     const onlyToken = token.slice(7, token.length);
@@ -44,12 +63,22 @@ const isAuth = (req, res, next) => {
   }
 }
 
-const isAdmin = (req, res, next) => {
+//========================================================================================================
+
+export const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next();
   }
-  return res.status(401).send({ msg: 'Admin Token is not valid.' })
+  return res.status(401).send({ msg: 'You are not authorized' })
 }
 
+//========================================================================================================
 
-  export {connect,getToken,isAuth,isAdmin}
+export const requireLogin = (req, res, next) => {
+  if (!req.user) {
+    return res.status(404).send({ msg: "You must log in" });
+  }
+  next();
+};
+
+//========================================================================================================

@@ -5,15 +5,17 @@ import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL,
-  USER_SIGNOUT,
   CURRENT_USER_SUCCESS,
   CURRENT_USER_REQUEST,
-  CURRENT_USER_FAIL
+  CURRENT_USER_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL
 } from './../constants/userConstants';
 import axios from 'axios'
 
-//--------------------------------------------------------------------------------------------------
-const register = (name, email, password,rePassword,history) =>async (dispatch) => {
+//======================================================================================================
+export const register = (name, email, password,rePassword,history) =>async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password, rePassword } });
   try {
     const {data} = await axios.post("/api/register", { name, email, password, rePassword });  
@@ -27,8 +29,8 @@ const register = (name, email, password,rePassword,history) =>async (dispatch) =
   }  
 }
 
-//---------------------------------------------------------------------------------------------------
-const login = (email, password,history) => async dispatch => {
+//======================================================================================================
+export const login = (email, password,history) => async dispatch => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     const { data } = await axios.post("/api/login", { email, password });
@@ -43,8 +45,8 @@ const login = (email, password,history) => async dispatch => {
   }  
 }
 
-//-----------------------------------------------------------------------------------------------------
-const handleCurrentUser = () => async dispatch => {
+//======================================================================================================
+export const handleCurrentUser = () => async dispatch => {
    dispatch({ type: CURRENT_USER_REQUEST });
   try {
    const {data} = await axios.get("/api/current_user");
@@ -56,9 +58,33 @@ const handleCurrentUser = () => async dispatch => {
   }  
 }
 
-//---------------------------------------------------------------------------------------------------------
-const logout = () => (dispatch) => {
-  dispatch({ type: USER_SIGNOUT });
-};
+//======================================================================================================
+export const forgotPassword = (email) => async dispatch => {
+  dispatch({ type: FORGOT_PASSWORD_REQUEST, payload: { email} });
+  try {
+    const { data } = await axios.put("/api/forgot-password", {email});
+    dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.msg });
+  } catch (error) {      
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+     payload: error.response&&error.response.data?error.response.data:error.response});
+  } 
+  
+}
 
-export {register,login,logout,handleCurrentUser}
+//======================================================================================================
+
+export const resetPass = (newPassword, resetToken) => async dispatch => {
+  dispatch({ type: FORGOT_PASSWORD_REQUEST, payload: { newPassword,resetToken} });
+  try {
+    const { data } = await axios.put("/api/reset-password", {newPassword,resetToken});
+    dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.msg });
+  } catch (error) {      
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+     payload: error.response&&error.response.data?error.response.data:error.response});
+  } 
+  
+}
+
+//======================================================================================================

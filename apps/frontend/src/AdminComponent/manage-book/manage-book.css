@@ -1,0 +1,9 @@
+.add{
+    position: fixed;
+    right: 150px;
+    bottom: 100px;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    text-align: center;
+}

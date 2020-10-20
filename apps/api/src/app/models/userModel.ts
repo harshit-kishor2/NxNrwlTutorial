@@ -14,7 +14,8 @@ const userSchema = new Schema({
   email: { type: String},
   password: { type: String },
   isAdmin: { type: Boolean, default: false },
-  date:{type:Date,deafult:Date.now()}
+  date: { type: Date, deafult: Date.now() },
+  resetPasswordLink:{type:String, default:""}
 });
 
 const userModel = model<userType>("User", userSchema);
