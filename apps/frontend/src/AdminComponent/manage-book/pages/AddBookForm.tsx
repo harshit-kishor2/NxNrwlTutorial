@@ -1,14 +1,15 @@
-import { ErrorMessage, FastField, Field, FieldArray, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { addBookHandler } from 'apps/frontend/src/actions/bookAction'
 import { toast, ToastContainer } from 'react-toastify'
-const AddBookForm = () => {
+const AddBookForm = (props) => {
+    const { book } = props
     const dispatch = useDispatch()
-
+    const [id, setid] = useState('')
     const [imageurl, setimageurl] = useState('')
-    const [name, setname] = useState('')
+    const [name, setname] = useState('n')
     const [author, setauthor] = useState('')
     const [description, setdescription] = useState('')
     const [items, setitems] = useState(null)
@@ -17,7 +18,8 @@ const AddBookForm = () => {
     const { loading, error, bookInfo } = addBook
 
     const handleSubmit = (value, { resetForm }) => {
-        const { name, author, description, items, image } = value
+        const { id, name, author, description, items, image } = value
+        setid(id)
         setname(name)
         setauthor(author)
         setdescription(description)
@@ -40,8 +42,7 @@ const AddBookForm = () => {
 
     useEffect(() => {
         if (imageurl) {
-            console.log(imageurl)
-            dispatch(addBookHandler(name, author, description, items, imageurl))
+            dispatch(addBookHandler(id, name, author, description, items, imageurl))
         }
     }, [imageurl])
 
@@ -53,12 +54,12 @@ const AddBookForm = () => {
             toast.success('Success')
         }
     }, [error, bookInfo])
-
     return (
         <div>
             <ToastContainer />
             <Formik
-                initialValues={{ name: "", author: "", description: "", items: '', image: '' }}
+                enableReinitialize={true}
+                initialValues={book ? { id: book._id, name: book.bookName, author: book.authorName, description: book.description, items: book.items, image: book.imageurl } : { name: '', author: "", description: "", items: '', image: '' }}
                 onSubmit={handleSubmit}
                 validationSchema={Yup.object().shape({
                     name: Yup.string().required("Book Name is required"),
@@ -76,6 +77,7 @@ const AddBookForm = () => {
                                     type="text"
                                     className="rounded shadow text-black text-center"
                                     placeholder="Book Name"
+
                                 />
                                 <p className='text-danger'><ErrorMessage name="name" /></p>
                             </div>

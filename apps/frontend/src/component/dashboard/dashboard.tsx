@@ -7,18 +7,13 @@ import { getAllBooks } from '../../actions/bookAction';
 export interface DashboardProps { }
 
 export const Dashboard = (props) => {
-  const dispatch = useDispatch()
   const searchBook = useSelector(state => state.searchBook)
   const { bookInfo } = searchBook
-  useEffect(() => {
-    dispatch(getAllBooks())
-  }, [])
   return (
     <div>
       <div className="row row-cols-2 row-cols-sm-4">
         {
           bookInfo.map(book =>
-
             <div key={book._id} className="col mb-4">
               <div className="card">
                 <img src={book.imageurl} className="card-img-top imgsize" alt="photo" />
@@ -30,6 +25,7 @@ export const Dashboard = (props) => {
                 </div>
               </div>
             </div>
+
           )
         }
       </div>

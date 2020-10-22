@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
-import Dashboard from '../../component/dashboard/dashboard';
 import './manage-book.css';
 import AddBook from './pages/AddBook';
+import { useSelector } from 'react-redux'
+import AdminDashboard from './pages/AdminDashboard';
 //==========================================================================================================
 /* eslint-disable-next-line */
 export interface ManageBookProps { }
 //==========================================================================================================
 const ManageBook = (props: ManageBookProps) => {
   const [flag, setFlag] = useState(false)
-
   return (
     <>
-      <div>
-        <Dashboard />
-      </div>
-
+      <AdminDashboard />
       <div className=''>
         {
           flag && <AddBook show={flag}

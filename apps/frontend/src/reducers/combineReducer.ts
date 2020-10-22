@@ -1,7 +1,8 @@
 import { combineReducers} from 'redux';
 import {
     addBookReducer,
-    searchBookReducer
+    searchBookReducer,
+    searchBookByIDReducer
 } from './bookReducer';
 import {
     currentUserReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     currentUser: currentUserReducer,
     password: passwordReducer,
     addBook: addBookReducer,
-    searchBook:searchBookReducer,
+    searchBook: searchBookReducer,
+    bookById:searchBookByIDReducer,
 })

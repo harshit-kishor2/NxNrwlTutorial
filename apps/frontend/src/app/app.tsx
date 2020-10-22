@@ -8,11 +8,17 @@ import { handleCurrentUser } from '../actions/userActions';
 import Loading from './pages/Loading';
 import MainSection from './routes/MainSection';
 import './app.css'
+import { getAllBooks } from '../actions/bookAction';
 export const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser);
   const { userInfo } = currentUser;
+  // for books rendering
+  useEffect(() => {
+    dispatch(getAllBooks())
+  }, [])
+  //for current user...
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)

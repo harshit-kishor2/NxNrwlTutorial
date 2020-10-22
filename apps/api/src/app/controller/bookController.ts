@@ -20,12 +20,40 @@ export const getBookController = (req, res) => {
     .then(books=>res.send(books))    
 }
 //========================================================================================================
-export const removeBookController = (req,res) => {
+export const getOneBookController = (req, res) => {
+    const id = req.params.id
+    Book.findOne({ _id: id })
+    .then(book=>res.send(book))
+}
+//========================================================================================================
+export const removeBookController = async (req, res) => {
+    const id = req.params.id
+     const book = await Book.findById(id);
+  if (book) {
+    await book.remove();
+    res.send({ msg: "Product Deleted" });
+  } else {
+    res.send("Error in Deletion.");
+  }
     
 }
 
 //========================================================================================================
-export const updatetBookController = (req,res) => {
+export const updatetBookController = async(req, res) => {
+     const { id,name, author, description, items, imageurl } = req.body
+    const book = await Book.findById({ _id: id })
+    if (book) {
+        book.bookName = name
+        book.authorName = author
+        book.description = description
+        book.items = items
+        book.imageurl = imageurl
+        const updateBook = await book.save()
+        if (updateBook) {
+            console.log("updated")
+            return res.status(200).send({ msg: "Successfully updated" });
+        }
+    }
     
 }
 
