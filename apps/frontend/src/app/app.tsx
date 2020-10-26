@@ -16,7 +16,7 @@ export const App = () => {
   const { userInfo } = currentUser;
   // for books rendering
   useEffect(() => {
-    dispatch(getAllBooks())
+    dispatch(getAllBooks(null))
   }, [])
   //for current user...
   useEffect(() => {

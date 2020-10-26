@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './dashboard.css';
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,10 +7,22 @@ import { getAllBooks } from '../../actions/bookAction';
 export interface DashboardProps { }
 
 export const Dashboard = (props) => {
+  const dispatch = useDispatch()
+  const [SearchKeyword, setSearchKeyword] = useState('')
   const searchBook = useSelector(state => state.searchBook)
   const { bookInfo } = searchBook
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(getAllBooks(SearchKeyword))
+  }
   return (
     <div>
+      <div className='m-2 p-2 text-center'>
+        <form onSubmit={submitHandler}>
+          <input name="SearchKeyword" onChange={(e) => setSearchKeyword(e.target.value)} />
+          <button className='m-2' type="submit">Search</button>
+        </form>
+      </div>
       <div className="row row-cols-2 row-cols-sm-4">
         {
           bookInfo.map(book =>
@@ -25,7 +37,6 @@ export const Dashboard = (props) => {
                 </div>
               </div>
             </div>
-
           )
         }
       </div>

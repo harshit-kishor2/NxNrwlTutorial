@@ -15,7 +15,7 @@ export const bookRoute = (app) => {
     app.delete("/api/admin/delete-book/:id",requireLogin,isAdmin,removeBookController)
 //========================================================================================================
 
-    app.get("/api/search-book",searchBookController)
+    app.get("/api/get-all-books/:SearchKeyword",getBookController)
 //========================================================================================================
 
     app.get("/api/get-all-books",getBookController)

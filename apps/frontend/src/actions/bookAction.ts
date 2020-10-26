@@ -33,11 +33,17 @@ export const addBookHandler = (id,name, author, description, items, imageurl) =>
   } 
 }
 //======================================================================================================
-export const getAllBooks = () => async (dispatch) => {
+export const getAllBooks = (SearchKeyword) => async (dispatch) => {
   dispatch({ type: SEARCH_BOOK_REQUEST});
   try {
-     const {data}  = await Axios.get("/api/get-all-books")
+    if (SearchKeyword) {
+      const {data}  = await Axios.get("/api/get-all-books/"+SearchKeyword)
   dispatch({type:SEARCH_BOOK_SUCCESS,payload:data})
+    } else {
+      const {data}  = await Axios.get("/api/get-all-books")
+  dispatch({type:SEARCH_BOOK_SUCCESS,payload:data})
+    }
+     
   } catch (error) { 
     dispatch({
       type: SEARCH_BOOK_FAIL,

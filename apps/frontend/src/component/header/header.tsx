@@ -33,8 +33,8 @@ export const Header = ({ user }) => {
                   </>
                   :
                   <>
-                    <Link className='link nav-link' to="#">User Profile</Link>
-                    <Link className='link nav-link' to="#">Issue Book</Link>
+                    <Link className='link nav-link' to="/user/user-profile">User Profile</Link>
+                    <Link className='link nav-link' to="/user/issue-book">Issue Book</Link>
                     <h6>Welcome {user.name}</h6>
                     <a className='link nav-link' href='/api/logout'>Logout</a>
                   </>}

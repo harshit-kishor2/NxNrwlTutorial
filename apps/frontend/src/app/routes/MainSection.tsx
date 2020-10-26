@@ -7,6 +7,8 @@ import ForgotPassword from '../../component/forgot-password/forgot-password';
 import Login from '../../component/login/login';
 import Registartion from '../../component/registartion/registartion';
 import ResetPassword from '../../component/reset-password/reset-password';
+import IssueBook from '../../UserComponent/issue-book/issue-book';
+import UserProfile from '../../UserComponent/user-profile/user-profile';
 import NotFound from '../pages/NotFound';
 
 const MainSection = ({ userInfo }) => {
@@ -35,8 +37,8 @@ const MainSection = ({ userInfo }) => {
                             :
                             <Switch>
                                 <Route path='/' exact component={Dashboard} />
-                                <Route path='/user-profile' exact component={ManageUser} />
-                                <Route path='/issue-book' exact component={ManageBook} />
+                                <Route path='/user/user-profile' exact component={UserProfile} />
+                                <Route path='/user/issue-book' exact component={IssueBook} />
                                 <Route path="*"> <NotFound /></Route>
                             </Switch>
 

@@ -37,7 +37,6 @@ const AdminDashboard = (props) => {
                             <Link onClick={() => {
                                 setFlag(!flag)
                                 setBookId(book._id)
-
                             }} className='m-2' to='#'>Edit</Link>
                             <a className='m-2' href='/admin/manage-book' onClick={() => dispatch(bookRemovehandler(book._id))}>Delete</a>
                         </div>

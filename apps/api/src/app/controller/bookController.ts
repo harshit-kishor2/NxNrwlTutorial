@@ -16,8 +16,21 @@ export const addBookController = (req,res) => {
 
 //========================================================================================================
 export const getBookController = (req, res) => {
+    const keyword = req.params.SearchKeyword
+    if (keyword) {
+        Book.find({
+            $or: [
+                { bookName: new RegExp(keyword, 'i') },
+                { authorName: new RegExp(keyword, 'i') }
+               ]
+        })
+       .then(books=>res.send(books))    
+    
+    } else {
     Book.find()
     .then(books=>res.send(books))    
+    }
+
 }
 //========================================================================================================
 export const getOneBookController = (req, res) => {
