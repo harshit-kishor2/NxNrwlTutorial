@@ -7,6 +7,7 @@ import authRoutes from './app/routes/authRoutes'
 import { environment } from './environments/environment'
 import passportConfig from './app/utils/passport'
 import multer from 'multer'
+import { issueBookRoute } from './app/routes/issueBookRoute';
 const app = express();
 
 //==============================================================================================
@@ -32,7 +33,7 @@ passportConfig(app)
 // Load all Routes..
 authRoutes(app)
 bookRoute(app)
-
+issueBookRoute(app)
 //==============================================================================================
 // Page not found for other urls
 app.use((req, res, next) => {

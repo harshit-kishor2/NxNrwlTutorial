@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify';
+import { issueBookDetailsById, issueBookRequest } from '../../actions/issueBookAction';
 import './issue-book.css';
 
 /* eslint-disable-next-line */
@@ -11,13 +14,28 @@ export const IssueBook = (props: IssueBookProps) => {
   const [BookId, setBookId] = useState('')
   const searchBook = useSelector(state => state.searchBook)
   const { bookInfo } = searchBook
+  const currentUser = useSelector(state => state.currentUser);
+  const { userInfo } = currentUser;
+  const issueBook = useSelector(state => state.issueBook)
+  const { issueBookInfo, error } = issueBook
   useEffect(() => {
     if (BookId) {
-      console.log(BookId)
+      dispatch(issueBookRequest(BookId, userInfo._id))
     }
   }, [BookId])
+  useEffect(() => {
+    if (error) {
+      toast.error("Yor already requested for this book")
+    }
+  }, [error])
+  useEffect(() => {
+    if (issueBookInfo) {
+      toast.success("Succesfully requested")
+    }
+  }, [issueBookInfo])
   return (
     <div>
+      <ToastContainer />
       {
         bookInfo.map(book =>
           <div key={book._id} className="row">
@@ -34,10 +52,13 @@ export const IssueBook = (props: IssueBookProps) => {
               </div>
             </div>
             <div className='col-lg-2'>
-              <Link className='m-2' to='#' onClick={() => setBookId(book._id)}>IssueBook</Link>
+              <Link className='m-2' to='#' onClick={() => setBookId(book._id)}>Issue Book</Link>
             </div>
           </div>
+
         )
+
+
       }
     </div>
   );

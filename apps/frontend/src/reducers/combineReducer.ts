@@ -5,6 +5,10 @@ import {
     searchBookByIDReducer
 } from './bookReducer';
 import {
+    issueBookByIDReducer,
+    issueBookReducer
+} from './issueBookReducer';
+import {
     currentUserReducer,
     passwordReducer,
     userLoginReducer,
@@ -19,5 +23,6 @@ export default combineReducers({
     password: passwordReducer,
     addBook: addBookReducer,
     searchBook: searchBookReducer,
-    bookById:searchBookByIDReducer,
+    bookById: searchBookByIDReducer,
+    issueBook: issueBookReducer
 })
