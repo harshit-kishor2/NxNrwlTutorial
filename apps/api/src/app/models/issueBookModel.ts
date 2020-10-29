@@ -9,9 +9,9 @@ export interface issueBookType extends Document{
 }
 
 const issueBookSchema = new Schema({
-  bookId: { type: String },
-  userId: { type: String },
-  bookStatus:{type:String},
+  bookId: { type: Schema.Types.ObjectId,ref:"Book" },
+  userId: { type: Schema.Types.ObjectId,ref:"User" },
+  bookStatus:{type:String ,default:''},
   issueDate: { type: Date},
   returnDate: { type: Date },
 });

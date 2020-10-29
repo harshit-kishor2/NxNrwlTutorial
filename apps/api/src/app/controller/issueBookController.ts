@@ -10,9 +10,10 @@ export const issueBookController =async (req, res) => {
                     { bookId: BookId }
                 ]
         })
-        if (issueBooks) {
-            console.log(issueBooks)
+        if (issueBooks && issueBooks.bookStatus=="Requested") {
             res.status(400).send({msg:"Already requested for this book"})
+        }else if (issueBooks && issueBooks.bookStatus=="Issued" && !null) {
+            res.status(400).send({msg:"Already issued this book"})
         }
         else {
        const newIssueBook = new IssueBook({
@@ -36,7 +37,8 @@ export const getIssueBookController = (req, res) => {
     const userId = req.params.userId
     if (userId) {
         IssueBook.find({ userId })
-        .then(issueBook=>res.send(issueBook))
+            .populate('bookId')
+        .then(issueBook=>res.send(issueBook))       
     }
     else {
          IssueBook.find()

@@ -24,5 +24,6 @@ export default combineReducers({
     addBook: addBookReducer,
     searchBook: searchBookReducer,
     bookById: searchBookByIDReducer,
-    issueBook: issueBookReducer
+    issueBook: issueBookReducer,
+    issueBookListById:issueBookByIDReducer
 })

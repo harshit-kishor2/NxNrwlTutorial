@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
-import { issueBookDetailsById, issueBookRequest } from '../../actions/issueBookAction';
+import { issueBookRequest } from '../../actions/issueBookAction';
 import './issue-book.css';
 
 /* eslint-disable-next-line */
