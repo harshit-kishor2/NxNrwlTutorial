@@ -29,7 +29,6 @@ const AdminDashboard = (props) => {
                                 <h5 className="card-title">{book.bookName}</h5>
                                 <h1 className="card-text card-text1">{book.authorName}-</h1>
                                 <p className="card-text">{book.description}</p>
-                                <p className="card-text">{book._id}</p>
                                 <p className="card-text"><small className="text-muted">{book.items}</small></p>
                             </div>
                         </div>

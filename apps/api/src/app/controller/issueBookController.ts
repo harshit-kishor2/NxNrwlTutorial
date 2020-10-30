@@ -1,4 +1,5 @@
 import IssueBook from '../models/issueBookModel'
+import Book from '../models/bookModel'
 //========================================================================================================
 export const issueBookController =async (req, res) => {
     const { BookId, userId } = req.body
@@ -62,22 +63,36 @@ export const deleteIssueBookController = async (req, res) => {
 //========================================================================================================
 export const updateIssueBookController = async (req, res) => {
     const bookId = req.params.bookId
-    const book = await IssueBook.findById(bookId);
+    const issueBook = await IssueBook.findById(bookId);
    // console.log(book)
-    if (book && book.bookStatus=='Issued') {
-     book.bookStatus = "Returned"
-        book.returnDate = new Date(Date.now()).toLocaleString().slice(0,10)
-        const updateBook = await book.save()
-        if (updateBook) {
-            return res.status(200).send({ msg: "Successfully updated" });
+    if (issueBook && issueBook.bookStatus=='Issued') {
+     issueBook.bookStatus = "Returned"
+        issueBook.returnDate = new Date(Date.now()).toLocaleString().slice(0,10)
+        const updateBook = await issueBook.save()
+          if (updateBook) {
+            const book = await Book.findById({ _id: updateBook.bookId })
+            if (book) {            
+                book.items=book.items+1
+                const updateitem = await book.save()
+                if (updateitem) {
+                return res.status(200).send({ msg: "Successfully updated" });
         }
-  }else if(book && book.bookStatus=='Requested' ) {
-        book.bookStatus = "Issued"
-        book.issueDate = new Date(Date.now()).toLocaleString().slice(0,10)
-        book.returnDate= new Date(Date.now()+(7*24*3600*1000)).toLocaleString().slice(0,10)
-        const updateBook = await book.save()
+            }
+        }
+  }else if(issueBook && issueBook.bookStatus=='Requested' ) {
+        issueBook.bookStatus = "Issued"
+        issueBook.issueDate = new Date(Date.now()).toLocaleString().slice(0,10)
+        issueBook.returnDate= new Date(Date.now()+(7*24*3600*1000)).toLocaleString().slice(0,10)
+        const updateBook = await issueBook.save()
         if (updateBook) {
-            return res.status(200).send({ msg: "Successfully updated" });
+            const book = await Book.findById({ _id: updateBook.bookId })
+            if (book) {            
+                book.items=book.items-1
+                const updateitem = await book.save()
+                if (updateitem) {
+                return res.status(200).send({ msg: "Successfully updated" });
+        }
+            }
         }
     } else {
         console.log("error")

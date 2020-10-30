@@ -46,12 +46,15 @@ export const IssueBook = (props: IssueBookProps) => {
                 <h5 className="card-title">{book.bookName}</h5>
                 <h1 className="card-text card-text1">{book.authorName}-</h1>
                 <p className="card-text">{book.description}</p>
-                <p className="card-text">{book._id}</p>
                 <p className="card-text"><small className="text-muted">{book.items}</small></p>
               </div>
             </div>
             <div className='col-lg-2'>
-              <Link className='m-2' to='#' onClick={() => setBookId(book._id)}>Issue Book</Link>
+              {book.items && book.items > 0 ?
+                <Link className='m-2' to='#' onClick={() => setBookId(book._id)}>Issue Book</Link>
+                :
+                <p className="text-danger">Not Available</p>
+              }
             </div>
           </div>
 
