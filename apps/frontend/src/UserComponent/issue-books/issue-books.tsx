@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import { issueBookRequest } from '../../actions/issueBookAction';
-import './issue-book.css';
+import './issue-books.css';
 
 /* eslint-disable-next-line */
 export interface IssueBookProps { }

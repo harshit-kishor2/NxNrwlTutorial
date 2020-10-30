@@ -6,6 +6,7 @@ import {
 } from './bookReducer';
 import {
     issueBookByIDReducer,
+    issueBookDetailsReducer,
     issueBookReducer
 } from './issueBookReducer';
 import {
@@ -25,5 +26,6 @@ export default combineReducers({
     searchBook: searchBookReducer,
     bookById: searchBookByIDReducer,
     issueBook: issueBookReducer,
-    issueBookListById:issueBookByIDReducer
+    issueBookListById: issueBookByIDReducer,
+    issueBookDetails:issueBookDetailsReducer
 })

@@ -63,7 +63,6 @@ export const updatetBookController = async(req, res) => {
         book.imageurl = imageurl
         const updateBook = await book.save()
         if (updateBook) {
-            console.log("updated")
             return res.status(200).send({ msg: "Successfully updated" });
         }
     }

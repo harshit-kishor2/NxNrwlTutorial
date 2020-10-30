@@ -7,7 +7,8 @@ import ForgotPassword from '../../component/forgot-password/forgot-password';
 import Login from '../../component/login/login';
 import Registartion from '../../component/registartion/registartion';
 import ResetPassword from '../../component/reset-password/reset-password';
-import IssueBook from '../../UserComponent/issue-book/issue-book';
+import IssueBook from '../../AdminComponent/issue-book/issue-book';
+import IssueBooks from '../../UserComponent/issue-books/issue-books';
 import UserProfile from '../../UserComponent/user-profile/user-profile';
 import NotFound from '../pages/NotFound';
 
@@ -30,15 +31,15 @@ const MainSection = ({ userInfo }) => {
                         userInfo.isAdmin ?
                             <Switch>
                                 <Route path='/' exact component={Dashboard} />
-                                <Route path='/admin/manage-user' exact component={ManageUser} />
                                 <Route path='/admin/manage-book' exact component={ManageBook} />
+                                <Route path='/admin/issue-book' exact component={IssueBook} />
                                 <Route path="*"> <NotFound /></Route>
                             </Switch>
                             :
                             <Switch>
                                 <Route path='/' exact component={Dashboard} />
                                 <Route path='/user/user-profile' exact component={UserProfile} />
-                                <Route path='/user/issue-book' exact component={IssueBook} />
+                                <Route path='/user/issue-book' exact component={IssueBooks} />
                                 <Route path="*"> <NotFound /></Route>
                             </Switch>
 

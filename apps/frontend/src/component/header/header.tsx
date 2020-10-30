@@ -27,7 +27,8 @@ export const Header = ({ user }) => {
                 user.isAdmin ?
                   <>
                     <Link className='link nav-link' to="/admin/manage-book">Manage Book</Link>
-                    <Link className='link nav-link' to="/admin/manage-user">Manage Users</Link>
+
+                    <Link className='link nav-link' to="/admin/issue-book">Issue Book</Link>
                     <h6>Welcome {user.name}</h6>
                     <a className='link nav-link' href="/api/logout">Logout</a>
                   </>
