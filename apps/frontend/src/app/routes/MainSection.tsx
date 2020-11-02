@@ -22,9 +22,9 @@ const MainSection = ({ userInfo }) => {
                         <Switch>
                             <Route path='/' exact component={Dashboard} />
                             <Route path='/login' exact component={Login} />
-                            <Route path='/registration' exact component={Registartion} />
-                            <Route path='/forgot-password' exact component={ForgotPassword} />
-                            <Route path='/reset-password/:token' exact component={ResetPassword} />
+                            <Route path='/registration' component={Registartion} />
+                            <Route path='/forgot-password' component={ForgotPassword} />
+                            <Route path='/reset-password/:token' component={ResetPassword} />
                             <Route path="*"> <NotFound /></Route>
                         </Switch>
                         :
