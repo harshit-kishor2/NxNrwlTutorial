@@ -41,6 +41,15 @@ app.use((req, res, next) => {
     message: 'Error !!! 404 not found',
   });  
 });
+
+//==============================================================================================
+if (environment.production) {
+  app.use(express.static("dist/apps/frontend"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "dist","apps","frontend", "index.html"));
+  });
+}
 //==============================================================================================
 // Server
 const port = environment.PORT;
@@ -49,10 +58,3 @@ app.listen(port, () => {
 });
 
 //==============================================================================================
-if (environment.production) {
-  app.use(express.static("dist/apps/"));
-  const path = require("path");
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "dist","apps","frontend", "index.html"));
-  });
-}
