@@ -43,7 +43,8 @@ app.use((req, res, next) => {
 });
 
 //==============================================================================================
-if (environment.production) {
+if (environment.production == true) {
+  console.log("hello")
   app.use(express.static("dist/apps/frontend"));
   const path = require("path");
   app.get("*", (req, res) => {
