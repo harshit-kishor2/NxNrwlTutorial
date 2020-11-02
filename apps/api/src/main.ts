@@ -1,12 +1,12 @@
 import { bookRoute } from './app/routes/bookRoute';
 import * as express from 'express';
 import morgan from 'morgan';
+import cors from 'cors'
 import * as bodyParser from 'body-parser';
 import {connect} from './app/utils/util';
 import authRoutes from './app/routes/authRoutes'
 import { environment } from './environments/environment'
 import passportConfig from './app/utils/passport'
-import multer from 'multer'
 import { issueBookRoute } from './app/routes/issueBookRoute';
 const app = express();
 
@@ -22,7 +22,7 @@ connect(mongodbUrl)
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors())
 //==============================================================================================
 
 // Passport middleware
@@ -49,8 +49,8 @@ app.listen(port, () => {
 });
 
 //==============================================================================================
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("dist/apps/frontend"));
+if (environment.production) {
+  app.use(express.static("dist/"));
   const path = require("path");
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "dist","apps","frontend", "index.html"));
