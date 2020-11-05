@@ -3,31 +3,44 @@ import Book from '../models/bookModel'
 //========================================================================================================
 export const issueBookController =async (req, res) => {
     const { BookId, userId } = req.body
+    var count =0
     if (BookId && userId) {
-        const issueBooks = await IssueBook.findOne({
+        const issueBooks = await IssueBook.find({
             $and:
                 [
                     { userId },
-                    { bookId: BookId }
+                    { bookId: BookId },
                 ]
         })
-        if (issueBooks && issueBooks.bookStatus=="Requested") {
-            res.status(400).send({msg:"Already requested for this book"})
-        }else if (issueBooks && issueBooks.bookStatus=="Issued") {
-            res.status(400).send({msg:"Already issued this book"})
+        if (issueBooks) {
+            issueBooks.filter(issue => {
+                if (issue.bookStatus == "Requested") {
+                  count++
+                }
+                else if (issue.bookStatus == "Issued") {
+                  count++
+                }
+                else {
+                  return  console.log("Returned")
+                }
+            })
+        }
+        if (count > 0) {
+            return res.status(400).send({msg:"Already issued this book"})
         }
         else {
-       const newIssueBook = new IssueBook({
+        const newIssueBook = new IssueBook({
         bookId:BookId,
         userId: userId,
         bookStatus:"Requested"
          })
             const newBook = await newIssueBook.save()
             if (newBook) {
-                res.send("Successfully requested..")
+                console.log(newBook)
+                return res.send("Successfully requested..")
             }
             else {
-                res.status(400).send({msg:"Some error"})
+                return res.status(400).send({msg:"Some error"})
             }
         }
     }
